@@ -58,13 +58,10 @@
             </thead>
             <tbody>
                 <?php
-                // Read the XML file
                 $xml = simplexml_load_file('spells.xml');
 
-                // Create an array to hold the spells
                 $spells = [];
 
-                // Populate the array with spell data
                 foreach ($xml->spell as $spell) {
                     $spells[] = [
                         'name' => (string) $spell->name,
@@ -78,19 +75,16 @@
                     ];
                 }
 
-                // Sort the spells array by level
                 usort($spells, function ($a, $b) {
                     return $a['level'] <=> $b['level'];
                 });
 
-                // Pagination
                 $itemsPerPage = 15;
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $startIndex = ($currentPage - 1) * $itemsPerPage;
                 $endIndex = $startIndex + $itemsPerPage - 1;
                 $totalSpells = count($spells);
 
-                // Display table rows for the current page
                 for ($i = $startIndex; $i <= $endIndex && $i < $totalSpells; $i++) {
                     echo '<tr>';
                     echo '<td>' . $spells[$i]['name'] . '</td>';
@@ -110,10 +104,8 @@
         <nav aria-label="Table pagination">
             <ul class="pagination justify-content-center">
                 <?php
-                // Calculate the number of pages
                 $totalPages = ceil($totalSpells / $itemsPerPage);
 
-                // Generate pagination links
                 if ($totalPages > 1) {
                     $prevPage = $currentPage - 1;
                     $nextPage = $currentPage + 1;
@@ -169,13 +161,11 @@
                 $('tbody').html(tableBody);
             }
 
-            // Handle search button click
             $('#search-button').on('click', function () {
                 var searchTerm = $('#search-input').val();
                 filterTable(searchTerm);
             });
 
-            // Handle enter key press
             $('#search-input').on('keypress', function (event) {
                 if (event.which === 13) {
                     var searchTerm = $(this).val();

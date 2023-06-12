@@ -55,13 +55,10 @@
             </thead>
             <tbody>
                 <?php
-                // Read the XML file
                 $xml = simplexml_load_file('races.xml');
 
-                // Create an array to hold the races
                 $races = [];
 
-                // Populate the array with race data
                 foreach ($xml->race as $race) {
                     $traits = [];
 
@@ -81,14 +78,12 @@
                     ];
                 }
 
-                // Pagination
                 $itemsPerPage = 5;
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $startIndex = ($currentPage - 1) * $itemsPerPage;
                 $endIndex = $startIndex + $itemsPerPage - 1;
                 $totalRaces = count($races);
 
-                // Display table rows for the current page
                 for ($i = $startIndex; $i <= $endIndex && $i < $totalRaces; $i++) {
                     echo '<tr>';
                     echo '<td>' . $races[$i]['name'] . '</td>';
@@ -109,10 +104,8 @@
         <nav aria-label="Table pagination">
             <ul class="pagination justify-content-center">
                 <?php
-                // Calculate the number of pages
                 $totalPages = ceil($totalRaces / $itemsPerPage);
 
-                // Generate pagination links
                 if ($totalPages > 1) {
                     $prevPage = $currentPage - 1;
                     $nextPage = $currentPage + 1;
@@ -169,13 +162,11 @@
                 $('tbody').html(tableBody);
             }
 
-            // Handle search button click
             $('#search-button').on('click', function () {
                 var searchTerm = $('#search-input').val();
                 filterTable(searchTerm);
             });
 
-            // Handle enter key press
             $('#search-input').on('keypress', function (event) {
                 if (event.which === 13) {
                     var searchTerm = $(this).val();
